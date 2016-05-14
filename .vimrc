@@ -29,7 +29,6 @@ set nocp
 filetype plugin indent on
 set wildmode=longest,list
 set backspace=indent,eol,start
-set shellslash
 set laststatus=2
 set hidden
 
