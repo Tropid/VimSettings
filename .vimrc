@@ -1,5 +1,5 @@
 if has('gui_running')
-  set guifont=Source\ Code\ Pro:h11"
+  set guifont=Source\ Code\ Pro:h10"
   set guioptions-=T
   set guioptions-=m
 endif
@@ -8,12 +8,14 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-Plug 'altercation/vim-colors-solarized'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'fatih/vim-go'
 Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
 set encoding=utf-8
@@ -22,7 +24,7 @@ setglobal fileencoding=utf-8
 set tabstop=4
 set shiftwidth=4
 set expandtab
-set smartindent
+set autoindent
 set number
 syntax on
 set lines=45 columns=110
@@ -47,14 +49,19 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " Add space after comment symbol
 let g:NERDSpaceDelims = 1
+let g:ctrlp_max_files = 1000
 
 map <M-Left> :bprevious<CR>
 map <M-Right> :bnext<CR>
-map <C-N> :tabnew<CR>
 
-set background=light
+nnoremap <leader>t :TagbarOpenAutoClose<CR>
+
+nnoremap <leader>e :NERDTreeToggle<CR>
+
+set background=dark
 colorscheme lucius
 
+" AsciiDoc
 au BufRead,BufNewFile *.adoc setfiletype asciidoc
 
 " XML Commands
@@ -69,3 +76,20 @@ au filetype go noremap <buffer> <M-r> :GoRename<CR>
 au filetype go noremap <buffer> <M-h> :GoDoc<CR>
 au filetype go noremap <buffer> <M-d> :GoDef<CR>
 au filetype go noremap <buffer> <M-t> :GoTest<CR>
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+" Haskell Commands
+au filetype haskell setlocal omnifunc=necoghc#omnifunc
+
+" Java Commands
+au filetype java noremap <buffer> <M-g> :Java<CR>
+au filetype java noremap <buffer> <M-h> :JavaDocPreview<CR>
+au filetype java noremap <buffer> <M-c> :JavaCorrect<CR>
+au filetype java noremap <buffer> <M-r> :JavaRename<CR>
+au filetype java noremap <buffer> <M-f> :JavaCallHierarchy<CR>
+au filetype java noremap <buffer> <M-d> :JavaImpl<CR>
