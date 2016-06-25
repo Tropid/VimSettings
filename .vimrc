@@ -16,6 +16,9 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'derekwyatt/vim-scala'
+Plug 'sjl/gundo.vim'
+Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 
 set encoding=utf-8
@@ -51,18 +54,22 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:NERDSpaceDelims = 1
 let g:ctrlp_max_files = 1000
 
-map <M-Left> :bprevious<CR>
-map <M-Right> :bnext<CR>
+noremap <M-h> :bprevious<CR>
+noremap <M-l> :bnext<CR>
 
 nnoremap <leader>t :TagbarOpenAutoClose<CR>
-
 nnoremap <leader>e :NERDTreeToggle<CR>
+nnoremap <leader>r :GundoToggle<CR>
 
 set background=dark
 colorscheme lucius
 
+" Disable blinking
+au GUIEnter * set vb t_vb=
+
 " AsciiDoc
 au BufRead,BufNewFile *.adoc setfiletype asciidoc
+au filetype asciidoc set tw=80
 
 " XML Commands
 au filetype xml set shiftwidth=2
@@ -93,3 +100,4 @@ au filetype java noremap <buffer> <M-c> :JavaCorrect<CR>
 au filetype java noremap <buffer> <M-r> :JavaRename<CR>
 au filetype java noremap <buffer> <M-f> :JavaCallHierarchy<CR>
 au filetype java noremap <buffer> <M-d> :JavaImpl<CR>
+
