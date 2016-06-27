@@ -7,7 +7,6 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'fatih/vim-go'
@@ -19,6 +18,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'sjl/gundo.vim'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'itchyny/lightline.vim'
 call plug#end()
 
 set encoding=utf-8
@@ -44,9 +44,6 @@ set vb t_vb=
 
 let mapleader = ","
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'wombat'
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
@@ -57,9 +54,17 @@ let g:ctrlp_max_files = 1000
 noremap <M-h> :bprevious<CR>
 noremap <M-l> :bnext<CR>
 
+nnoremap <C-j> <C-w>j
+nnoremap <C-h> <C-w>h
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
 nnoremap <leader>t :TagbarOpenAutoClose<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>r :GundoToggle<CR>
+nnoremap <leader>q :CtrlPBuffer<CR>
+nnoremap <leader>m :CtrlPMRUFiles<CR>
+nnoremap <leader>f :CtrlP<CR>
 
 set background=dark
 colorscheme lucius
