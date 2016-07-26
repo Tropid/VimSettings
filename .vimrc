@@ -1,14 +1,15 @@
 if has('gui_running')
-  set guifont=Source\ Code\ Pro:h10"
-  set guioptions-=T
-  set guioptions-=m
+    set guifont=Source\ Code\ Pro:h10"
+    set guioptions-=T
+    set guioptions-=m
 endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'jonathanfilip/vim-lucius'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+Plug 'SirVer/ultisnips'
 Plug 'fatih/vim-go'
 Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdcommenter'
@@ -18,7 +19,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'sjl/gundo.vim'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'itchyny/lightline.vim'
+Plug 'godlygeek/tabular'
+Plug 'pangloss/vim-javascript'
 call plug#end()
 
 set encoding=utf-8
@@ -27,7 +29,6 @@ setglobal fileencoding=utf-8
 set tabstop=4
 set shiftwidth=4
 set expandtab
-set autoindent
 set number
 syntax on
 set lines=45 columns=110
@@ -44,20 +45,37 @@ set vb t_vb=
 
 let mapleader = ","
 
+let g:UltiSnipsSnippetsDir = "~/vimfiles/UltiSnips/"
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " Add space after comment symbol
 let g:NERDSpaceDelims = 1
 let g:ctrlp_max_files = 1000
+" Disable all plugins for airline
+let g:airline_extensions = ['tabline']
+" Remove arrow from airline
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_theme = 'wombat'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#left_set = '|'
+let g:airline#extensions#tabline#left_alt_sep = '|'
 
 noremap <M-h> :bprevious<CR>
 noremap <M-l> :bnext<CR>
+
+inoremap jk <ESC>
+inoremap kj <ESC>
 
 nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <C-q> <C-w>q
+
+nnoremap <leader>ff :cd %:h<CR>
 
 nnoremap <leader>t :TagbarOpenAutoClose<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
@@ -76,9 +94,12 @@ au GUIEnter * set vb t_vb=
 au BufRead,BufNewFile *.adoc setfiletype asciidoc
 au filetype asciidoc set tw=80
 
+" Handlebars
+au BufRead,BufNewFile *.hbs setfiletype html
+
 " XML Commands
-au filetype xml set shiftwidth=2
-au filetype xml set tabstop=2
+au filetype xml,javascript,html set shiftwidth=2
+au filetype xml,javascript,html set tabstop=2
 
 " Go Commands
 au filetype go noremap <buffer> <M-i> :GoImport
@@ -97,12 +118,3 @@ let g:go_highlight_build_constraints = 1
 
 " Haskell Commands
 au filetype haskell setlocal omnifunc=necoghc#omnifunc
-
-" Java Commands
-au filetype java noremap <buffer> <M-g> :Java<CR>
-au filetype java noremap <buffer> <M-h> :JavaDocPreview<CR>
-au filetype java noremap <buffer> <M-c> :JavaCorrect<CR>
-au filetype java noremap <buffer> <M-r> :JavaRename<CR>
-au filetype java noremap <buffer> <M-f> :JavaCallHierarchy<CR>
-au filetype java noremap <buffer> <M-d> :JavaImpl<CR>
-
