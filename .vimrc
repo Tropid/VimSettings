@@ -1,26 +1,27 @@
 if has('gui_running')
-    set guifont=Source\ Code\ Pro:h10"
+    set guifont=Fira_Code:h10
     set guioptions-=T
     set guioptions-=m
+    set lines=45 columns=110
+    set printfont=Courier:h16
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'jonathanfilip/vim-lucius'
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'SirVer/ultisnips'
-Plug 'fatih/vim-go'
 Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'majutsushi/tagbar'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'derekwyatt/vim-scala'
-Plug 'sjl/gundo.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'godlygeek/tabular'
-Plug 'pangloss/vim-javascript'
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
+Plug 'itchyny/lightline.vim'
+Plug 'jceb/vim-orgmode'
+Plug 'vim-scripts/utl.vim'
+Plug 'majutsushi/tagbar'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 set encoding=utf-8
@@ -31,7 +32,6 @@ set shiftwidth=4
 set expandtab
 set number
 syntax on
-set lines=45 columns=110
 set nocp
 filetype plugin indent on
 set wildmode=longest,list
@@ -39,11 +39,13 @@ set backspace=indent,eol,start
 set laststatus=2
 set hidden
 set diffopt=filler,vertical
+set sessionoptions=blank,buffers,curdir,folds,help,options,winsize,resize
 
 " Disable bell sound
 set vb t_vb=
 
 let mapleader = ","
+let maplocalleader = " "
 
 let g:UltiSnipsSnippetsDir = "~/vimfiles/UltiSnips/"
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -51,17 +53,8 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " Add space after comment symbol
 let g:NERDSpaceDelims = 1
-let g:ctrlp_max_files = 1000
-" Disable all plugins for airline
-let g:airline_extensions = ['tabline']
-" Remove arrow from airline
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_theme = 'wombat'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#left_set = '|'
-let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:lightline = { 'colorscheme': 'PaperColor' }
+let g:racer_experimental_completer = 1
 
 noremap <M-h> :bprevious<CR>
 noremap <M-l> :bnext<CR>
@@ -79,42 +72,13 @@ nnoremap <leader>ff :cd %:h<CR>
 
 nnoremap <leader>t :TagbarOpenAutoClose<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
-nnoremap <leader>r :GundoToggle<CR>
-nnoremap <leader>q :CtrlPBuffer<CR>
-nnoremap <leader>m :CtrlPMRUFiles<CR>
-nnoremap <leader>f :CtrlP<CR>
 
 set background=dark
-colorscheme lucius
+colorscheme PaperColor
 
 " Disable blinking
 au GUIEnter * set vb t_vb=
 
-" AsciiDoc
-au BufRead,BufNewFile *.adoc setfiletype asciidoc
-au filetype asciidoc set tw=80
-
-" Handlebars
-au BufRead,BufNewFile *.hbs setfiletype html
-
 " XML Commands
 au filetype xml,javascript,html set shiftwidth=2
 au filetype xml,javascript,html set tabstop=2
-
-" Go Commands
-au filetype go noremap <buffer> <M-i> :GoImport
-au filetype go noremap <buffer> <M-b> :GoBuild<CR>
-au filetype go noremap <buffer> <M-g> :GoRun<CR>
-au filetype go noremap <buffer> <M-r> :GoRename<CR>
-au filetype go noremap <buffer> <M-h> :GoDoc<CR>
-au filetype go noremap <buffer> <M-d> :GoDef<CR>
-au filetype go noremap <buffer> <M-t> :GoTest<CR>
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-
-" Haskell Commands
-au filetype haskell setlocal omnifunc=necoghc#omnifunc
